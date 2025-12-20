@@ -1,0 +1,268 @@
+/* === RESET Y CONFIGURACIÓN BASE === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #121212;
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  min-height: 100vh;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* === HEADER Y TÍTULO === */
+.header-container {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.title {
+  font-size: 2.5rem;
+  color: #ffffff;
+  text-align: center;
+}
+
+/* === MENSAJES DEL JUEGO === */
+.message {
+  padding: 12px 24px;
+  margin: 15px 0;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
+  background-color: #333;
+  color: white;
+  animation: fadeIn 0.3s;
+  min-width: 300px;
+  max-width: 90%;
+}
+
+.message.win {
+  background-color: #538d4e;
+}
+
+.message.lose {
+  background-color: #8b0000;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === TABLERO Y CELDAS === */
+.board {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 1.5rem 0;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+}
+
+.cell {
+  width: 62px;
+  height: 62px;
+  border: 2px solid #3a3a3c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: #121212;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+/* Estados de las celdas */
+.cell.correct {
+  background-color: #538d4e;
+  border-color: #538d4e;
+}
+
+.cell.present {
+  background-color: #b59f3b;
+  border-color: #b59f3b;
+}
+
+.cell.absent {
+  background-color: #3a3a3c;
+  border-color: #3a3a3c;
+}
+
+/* Fila actual (donde se escribe) */
+.row.current .cell {
+  border-color: #565758;
+  animation: pulseBorder 1.5s infinite;
+}
+
+@keyframes pulseBorder {
+  0% { border-color: #565758; }
+  50% { border-color: #888; }
+  100% { border-color: #565758; }
+}
+
+/* === ANIMACIONES DE REVELACIÓN === */
+@keyframes flip {
+  0% {
+    transform: rotateX(0);
+    background-color: #121212;
+    border-color: #3a3a3c;
+  }
+  50% {
+    transform: rotateX(90deg);
+    background-color: #121212;
+    border-color: #3a3a3c;
+  }
+  100% {
+    transform: rotateX(0);
+  }
+}
+
+.cell.correct,
+.cell.present,
+.cell.absent {
+  animation: flip 0.6s ease forwards;
+}
+
+/* Retrasos para animación en secuencia (letra por letra) */
+.row:not(.current) .cell:nth-child(1) { animation-delay: 0.1s; }
+.row:not(.current) .cell:nth-child(2) { animation-delay: 0.3s; }
+.row:not(.current) .cell:nth-child(3) { animation-delay: 0.5s; }
+.row:not(.current) .cell:nth-child(4) { animation-delay: 0.7s; }
+.row:not(.current) .cell:nth-child(5) { animation-delay: 0.9s; }
+
+/* === TECLADO VIRTUAL === */
+.keyboard-container {
+  margin: 25px 0;
+  width: 100%;
+  max-width: 500px;
+  user-select: none;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.keyboard-key {
+  height: 58px;
+  min-width: 40px;
+  border: none;
+  border-radius: 4px;
+  background-color: #818384;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex: 1;
+}
+
+.keyboard-key:hover {
+  background-color: #6a6b6c;
+}
+
+.keyboard-key.special-key {
+  flex: 1.5;
+  font-size: 0.9rem;
+  background-color: #565758;
+}
+
+/* Estados del teclado */
+.keyboard-key.correct {
+  background-color: #538d4e !important;
+}
+
+.keyboard-key.present {
+  background-color: #b59f3b !important;
+}
+
+.keyboard-key.absent {
+  background-color: #3a3a3c !important;
+  color: #777;
+}
+
+/* Nota del teclado físico */
+.keyboard-note {
+  margin-top: 10px;
+  color: #666;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+/* === PANTALLA DE FIN DEL JUEGO SIMPLE === */
+.game-end-info {
+  margin: 30px 0;
+  padding: 20px;
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+  animation: fadeIn 0.8s;
+}
+
+.solution-word {
+  color: #ffcc00;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+/* Botón "Jugar de nuevo" simple */
+.play-again-button {
+  margin-top: 15px;
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  background-color: #538d4e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.play-again-button:hover {
+  background-color: #3e6b3a;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .app { padding: 15px; }
+  .title { font-size: 2.2rem; }
+  .cell { width: 56px; height: 56px; font-size: 1.8rem; }
+  .keyboard-key { height: 52px; min-width: 32px; font-size: 1rem; }
+  .solution-word { font-size: 1.8rem; }
+  .play-again-button { padding: 10px 25px; font-size: 1rem; }
+}
+
+@media (max-width: 500px) {
+  .cell { width: 52px; height: 52px; font-size: 1.7rem; }
+  .title { font-size: 2rem; }
+  .message { min-width: 280px; padding: 10px 20px; }
+  .keyboard-key { height: 48px; min-width: 28px; font-size: 0.9rem; }
+  .keyboard-row { gap: 4px; margin-bottom: 6px; }
+  .solution-word { font-size: 1.6rem; letter-spacing: 1px; }
+}
