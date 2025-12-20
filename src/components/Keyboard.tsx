@@ -1,5 +1,6 @@
 import type { CellState } from "../hooks/useWordle";
 
+
 interface KeyboardProps {
   onKeyPress: (key: string) => void;
   letterStates: Record<string, CellState>;
@@ -13,7 +14,14 @@ const KEYBOARD_ROWS = [
 
 function Keyboard({ onKeyPress, letterStates }: KeyboardProps) {
   const handleClick = (key: string) => {
-    onKeyPress(key);
+    // SOLUCIÓN: Convertir "ENTER" a "Enter" (con E mayúscula solo al inicio)
+    if (key === "ENTER") {
+      onKeyPress("Enter");
+    } else if (key === "⌫") {
+      onKeyPress("Backspace");
+    } else {
+      onKeyPress(key);
+    }
   };
 
   const getKeyClass = (key: string) => {
@@ -29,10 +37,10 @@ function Keyboard({ onKeyPress, letterStates }: KeyboardProps) {
             <button
               key={key}
               className={getKeyClass(key)}
-              onClick={() => handleClick(key === "⌫" ? "Backspace" : key)}
+              onClick={() => handleClick(key)}
               type="button"
             >
-              {key === "Backspace" ? "⌫" : key}
+              {key === "⌫" ? "⌫" : key}
             </button>
           ))}
         </div>
