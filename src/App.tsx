@@ -20,9 +20,9 @@ function App() {
   };
 
   return (
-    <main className="app">
+    <main className="app" translate="no">
       <div className="header-container">
-        <h1 className="title">CIPOTEWORDLE</h1>
+        <h1 className="title" translate="no">CIPOTEWORDLE</h1>
       </div>
 
       {message && (

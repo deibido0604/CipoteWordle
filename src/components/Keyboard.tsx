@@ -39,6 +39,8 @@ function Keyboard({ onKeyPress, letterStates }: KeyboardProps) {
               className={getKeyClass(key)}
               onClick={() => handleClick(key)}
               type="button"
+              translate="no"
+              lang="es"
             >
               {key === "⌫" ? "⌫" : key}
             </button>
